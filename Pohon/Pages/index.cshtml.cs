@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Pohon.Pages
 {
-    public class Main : PageModel
+    public class Index : PageModel
     {
-        public void OnGet()
+        [BindProperty(SupportsGet = true)]
+        public string CheckQuery { get; set; }
+        public IActionResult OnGet()
         {
-            
+            Console.WriteLine(CheckQuery);
+            return Page();
         }
     }
 }

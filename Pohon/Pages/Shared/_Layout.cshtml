@@ -1,13 +1,16 @@
 ﻿<!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
-        @RenderBody()
+<div class="page-wrapper">
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+          @RenderBody()
     </div>
+  </div>
 </body>
 </html>
