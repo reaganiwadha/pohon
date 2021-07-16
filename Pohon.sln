@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pohon", "Pohon\Pohon.csproj", "{370EFB63-65FC-4FCB-8F7F-F89DF81AA96B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{370EFB63-65FC-4FCB-8F7F-F89DF81AA96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{370EFB63-65FC-4FCB-8F7F-F89DF81AA96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{370EFB63-65FC-4FCB-8F7F-F89DF81AA96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{370EFB63-65FC-4FCB-8F7F-F89DF81AA96B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
