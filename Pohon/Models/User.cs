@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,6 +14,8 @@ namespace Pohon.Models
         public string Username { get; set; }
         [Column("password")]
         public string Password { get; set; }
+        
+        public List<GithubOAuthDetail> GithubOAuthDetails { get; set; }
         
         [Column("last_updated"), DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime LastUpdated { get; set; }

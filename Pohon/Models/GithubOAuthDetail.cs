@@ -15,7 +15,9 @@ namespace Pohon.Models
         public string Login { get; set; }
         [Column("node_id")]
         public string NodeId { get; set; }
-
+        [Column("github_id")]
+        public int GithubId { get; set; }
+        
         public User User { get; set; }
         
         [Column("last_updated"), DatabaseGenerated(DatabaseGeneratedOption.Computed)]
