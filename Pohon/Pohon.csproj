@@ -17,4 +17,12 @@
       <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.3.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Model" />
+    </ItemGroup>
+
 </Project>

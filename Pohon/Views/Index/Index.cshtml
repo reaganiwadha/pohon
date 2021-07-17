@@ -1,10 +1,8 @@
 ﻿@page
-@model Pohon.Pages.Index
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    Layout = "Shared/_Layout";
-    ViewData["Title"] = "Pohon 🌲";
+    Layout = "../Shared/_Layout";
 }
 
 <div class="container-xl">
@@ -12,7 +10,7 @@
     <form class="w-400 mw-full">
         <div class="form-group">
             <label for="full-name">pohon.sh/</label>
-            <input asp-for="CheckQuery" type="text" class="form-control" id="full-name" placeholder="your pohon link" required="required">
+            <input type="text" class="form-control" id="full-name" placeholder="your pohon link" required="required">
         </div>
         <input class="btn btn-primary" type="submit" class="form-control" value="Check">
     </form>
