@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pohon.Migrations;
 using Pohon.Models;
 
 namespace Pohon.Data
@@ -12,6 +13,7 @@ namespace Pohon.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>();
+            modelBuilder.Entity<GithubOAuthDetail>();
         }
     }
 }
