@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -24,6 +23,7 @@ namespace Pohon.Controllers
         public async Task<IActionResult> AuthorizeGithubOAuth(string code)
         {
             var result = await GithubOAuthClient.ExchangeCode(_githubOAuthOptions, code, _httpClient);
+            await GithubOAuthClient.GetUser(result.AccessToken, _httpClient);
             return Ok(result);
         }
     }

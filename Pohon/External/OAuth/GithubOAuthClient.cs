@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Pohon.Config;
@@ -27,6 +26,7 @@ namespace Pohon.External.OAuth
     public static class GithubOAuthClient
     {
         private const string GithubAccessTokenEndpoint = "https://github.com/login/oauth/access_token";
+        private const string GithubRequestUserEndpoint = "https://api.github.com/user";
         
         public static async Task<GithubAccessTokenResponse> ExchangeCode(GithubOAuthOptions options, string code, HttpClient client)
         {
@@ -40,14 +40,24 @@ namespace Pohon.External.OAuth
             var stringPayload = JsonConvert.SerializeObject(payload);
             var requestMessage = new HttpRequestMessage(HttpMethod.Post, GithubAccessTokenEndpoint);
             var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
-            Console.WriteLine(stringPayload);
             requestMessage.Content = httpContent;
             requestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             
             var response = await client.SendAsync(requestMessage);
             var responseString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseString);
             return JsonConvert.DeserializeObject<GithubAccessTokenResponse>(responseString);
+        }
+
+        public static async Task GetUser(string token, HttpClient client)
+        {
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, GithubRequestUserEndpoint);
+            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("token", token);
+            requestMessage.Headers.UserAgent.Add(new ProductInfoHeaderValue("pohon", "1.0"));
+            Console.WriteLine(requestMessage.Headers.ToString());
+            var response = await client.SendAsync(requestMessage);
+            var responseString = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseString);
+            // return JsonConvert.DeserializeObject(responseString);
         }
     }
 }
