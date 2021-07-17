@@ -1,11 +1,12 @@
-using System.Configuration;
+using System.Net.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Pohon.Config;
 using Pohon.Data;
 
@@ -22,14 +23,11 @@ namespace Pohon
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<GithubOAuthConfig>(_configuration.GetSection("OAuth:Github"));
+            services.Configure<GithubOAuthOptions>(_configuration.GetSection("OAuth:Github"));
+            services.AddSingleton<HttpClient>();
             services.AddDbContext<PohonDbContext>(options => options.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
             services.AddRazorPages();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "cookie";
-                options.DefaultChallengeScheme = "oidc";
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,10 +40,16 @@ namespace Pohon
             app.UseRouting();
 
             app.UseAuthentication();
+            
+            var cookiePolicyOptions = new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+            };
+
+            app.UseCookiePolicy(cookiePolicyOptions);
 
             app.UseEndpoints(endpoints =>
             {
-                // endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
