@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pohon.Models;
 
 namespace Pohon.Data
 {
@@ -6,7 +7,11 @@ namespace Pohon.Data
     {
         public PohonDbContext(DbContextOptions<PohonDbContext> options) : base(options)
         {
-            
-        }   
+        }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>();
+        }
     }
 }
