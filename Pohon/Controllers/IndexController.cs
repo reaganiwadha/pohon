@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Pohon.Config;
+using Pohon.External.OAuth.Structures;
 
 namespace Pohon.Controllers
 {
     public class IndexController : Controller
     {
-        private readonly GithubOAuthOptions _githubOAuthConfig;
+        private readonly GithubOAuthOptions _githubOAuthOptions;
         
         public IndexController(IOptions<GithubOAuthOptions> githubOAuthOptions)
         {
-            _githubOAuthConfig = githubOAuthOptions.Value;
+            _githubOAuthOptions = githubOAuthOptions.Value;
         }
         
         [Route("/")]
         public IActionResult Index()
         {
-            ViewData["Github.AuthorizeUri"] = _githubOAuthConfig.AuthorizeUri;
+            ViewData["Github.AuthorizeUri"] = _githubOAuthOptions.AuthorizeUri;
             return View();
         }
     }

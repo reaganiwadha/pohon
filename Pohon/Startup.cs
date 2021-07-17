@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pohon.Config;
 using Pohon.Data;
+using Pohon.External.OAuth.Structures;
 
 namespace Pohon
 {
@@ -27,7 +27,7 @@ namespace Pohon
             services.AddSingleton<HttpClient>();
             services.AddDbContext<PohonDbContext>(options => options.UseMySQL(_configuration.GetConnectionString("DefaultConnection")));
             services.AddRazorPages();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

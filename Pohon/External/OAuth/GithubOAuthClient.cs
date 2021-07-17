@@ -4,25 +4,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Pohon.Config;
+using Pohon.External.OAuth.Structures;
 
 namespace Pohon.External.OAuth
 {
-    public record GithubAccessTokenRequest
-    {
-        [JsonProperty("client_id")] public string ClientId { get; init; }
-        [JsonProperty("client_secret")] public string ClientSecret { get; init; }
-        [JsonProperty("code")] public string Code { get; init; }
-        [JsonProperty("redirect_uri")] public string RedirectUri { get; init; }
-    }
-
-    public record GithubAccessTokenResponse
-    {
-        [JsonProperty("token_type")] public string TokenType { get; init; }
-        [JsonProperty("scope")] public string Scope { get; init; }
-        [JsonProperty("access_token")] public string AccessToken { get; init; }
-    }
-    
     public static class GithubOAuthClient
     {
         private const string GithubAccessTokenEndpoint = "https://github.com/login/oauth/access_token";
@@ -48,16 +33,14 @@ namespace Pohon.External.OAuth
             return JsonConvert.DeserializeObject<GithubAccessTokenResponse>(responseString);
         }
 
-        public static async Task GetUser(string token, HttpClient client)
+        public static async Task<GithubGetUserResponse> GetUser(string token, HttpClient client)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, GithubRequestUserEndpoint);
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("token", token);
             requestMessage.Headers.UserAgent.Add(new ProductInfoHeaderValue("pohon", "1.0"));
-            Console.WriteLine(requestMessage.Headers.ToString());
             var response = await client.SendAsync(requestMessage);
             var responseString = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseString);
-            // return JsonConvert.DeserializeObject(responseString);
+            return JsonConvert.DeserializeObject<GithubGetUserResponse>(responseString);
         }
     }
 }

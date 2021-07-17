@@ -1,9 +1,14 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Pohon.Config;
 using Pohon.External.OAuth;
+using Pohon.External.OAuth.Structures;
 
 namespace Pohon.Controllers
 {
@@ -20,11 +25,32 @@ namespace Pohon.Controllers
 
         [HttpGet]
         [Route("/authorize/github")]
-        public async Task<IActionResult> AuthorizeGithubOAuth(string code)
+        public async Task AuthorizeGithubOAuth(string code)
         {
-            var result = await GithubOAuthClient.ExchangeCode(_githubOAuthOptions, code, _httpClient);
-            await GithubOAuthClient.GetUser(result.AccessToken, _httpClient);
-            return Ok(result);
+            var exchangeCodeResponse = await GithubOAuthClient.ExchangeCode(_githubOAuthOptions, code, _httpClient);
+            var getUserResponse = await GithubOAuthClient.GetUser(exchangeCodeResponse.AccessToken, _httpClient);
+
+            // Add a repository to check the user store etc etc
+            
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = DateTimeOffset.Now.AddMinutes(30),
+            };
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, getUserResponse.Login),
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity), authProperties);
+            
+            // return Ok(result);
         }
+        
     }
 }

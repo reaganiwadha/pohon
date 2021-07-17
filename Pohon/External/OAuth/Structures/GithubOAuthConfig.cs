@@ -1,4 +1,4 @@
-﻿namespace Pohon.Config
+﻿namespace Pohon.External.OAuth.Structures
 {
     public record GithubOAuthOptions
     {
