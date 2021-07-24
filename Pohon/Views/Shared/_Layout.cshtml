@@ -9,9 +9,14 @@
     <nav class="navbar">
         <h1>Pohon</h1>
         <p>A blatant linktree ripoff</p>
-          <form>
-            <button href=@ViewData["Github.AuthorizeUri"] class="btn btn-primary" type="submit">Sign in with Github</button>
-          </form>
+        @if (!User!.Identity!.IsAuthenticated)
+        {
+            <a href=@ViewData["Github.AuthorizeUri"] class="btn btn-primary" type="submit">Sign in with Github</a>
+        }
+        else
+        {
+            <p>You are logged in as <b>@User.Identity.Name</b> | <a href="/logout">Logout</a></p>
+        }
         </nav>
     <div>
           @RenderBody()

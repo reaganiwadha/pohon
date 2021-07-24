@@ -72,6 +72,13 @@ namespace Pohon.Controllers
 
             return new LocalRedirectResult("/dashboard");
         }
-        
+
+        [HttpGet]
+        [Route("/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return new LocalRedirectResult("/");
+        }
     }
 }
