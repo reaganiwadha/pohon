@@ -3,38 +3,18 @@
 <html lang="en">
 <head>
     <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
-<div class="page-wrapper with-navbar">
     <nav class="navbar">
-          <a href="#" class="navbar-brand">
-            Pohon
-          </a>
-          <span class="navbar-text text-monospace">v1.0</span> 
-          @* <ul class="navbar-nav d-none d-md-flex">  *@
-          @*   <li class="nav-item active"> *@
-          @*     <a href="#" class="nav-link">Docs</a> *@
-          @*   </li> *@
-          @*   <li class="nav-item"> *@
-          @*     <a href="#" class="nav-link">Products</a> *@
-          @*   </li> *@
-          @* </ul> *@
-          <form class="form-inline d-none d-md-flex ml-auto" action="..." method="...">
-            <a href=@ViewData["Github.AuthorizeUri"] class="btn btn-primary" type="submit">Sign in with Github</a>
+        <h1>Pohon</h1>
+        <p>A blatant linktree ripoff</p>
+          <form>
+            <button href=@ViewData["Github.AuthorizeUri"] class="btn btn-primary" type="submit">Sign in with Github</button>
           </form>
-          <div class="navbar-content d-md-none ml-auto">
-            <div class="dropdown with-arrow">
-              <button class="btn" data-toggle="dropdown" type="button" id="navbar-dropdown-toggle-btn-1">
-                Menu
-                <i class="fa fa-angle-down" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
         </nav>
-    <div class="content-wrapper">
+    <div>
           @RenderBody()
     </div>
-  </div>
 </body>
 </html>
